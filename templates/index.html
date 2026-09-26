@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>AI Cloud Deployment Health Monitor</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 30px;
+        }
+
+
+        h1 {
+            color: #1f2937;
+        }
+
+
+        h2 {
+            color: #374151;
+        }
+
+
+        .status-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+
+        .metrics {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 200px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+
+        .metric-card h3 {
+            margin-top: 0;
+            color: #374151;
+        }
+
+
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+
+        input {
+            padding: 8px;
+            margin: 6px 0;
+            width: 200px;
+        }
+
+
+        button {
+            padding: 12px 25px;
+            margin-top: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background-color: #2563eb;
+            color: white;
+            font-size: 16px;
+        }
+
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+
+        table {
+            background: white;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+
+        th {
+            background-color: #e5e7eb;
+        }
+
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+
+        .healthy {
+            color: green;
+            font-weight: bold;
+        }
+
+
+        .warning {
+            color: orange;
+            font-weight: bold;
+        }
+
+
+        .critical {
+            color: red;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- -------------------------------- -->
+    <!-- PROJECT TITLE -->
+    <!-- -------------------------------- -->
+
+    <h1>☁️ AI Cloud Deployment Health Monitor</h1>
+
+    <p>
+        Monitor deployment performance, detect anomalies,
+        and analyze system health.
+    </p>
+
+    <p>
+        This system monitors CPU usage, memory usage,
+        response time, and error rate.
+    </p>
+
+
+    <hr>
+
+
+    <!-- -------------------------------- -->
+    <!-- SYSTEM STATUS -->
+    <!-- -------------------------------- -->
+
+    <h2>📊 System Status</h2>
+
+    <div class="status-card">
+
+        <p>
+            <b>Current Health Status:</b>
+        </p>
+
+
+        {% if status == "Healthy" %}
+
+            <h3 class="healthy">
+                🟢 Healthy
+            </h3>
+
+
+        {% elif status == "Warning" %}
+
+            <h3 class="warning">
+                🟡 Warning
+            </h3>
+
+
+        {% elif status == "Critical" %}
+
+            <h3 class="critical">
+                🔴 Critical
+            </h3>
+
+
+        {% else %}
+
+            <h3>
+                ⚪ No Data
+            </h3>
+
+        {% endif %}
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- -------------------------------- -->
+    <!-- CLOUD METRICS -->
+    <!-- -------------------------------- -->
+
+    <h2>☁️ Cloud Metrics</h2>
+
+
+    <div class="metrics">
+
+
+        <div class="metric-card">
+
+            <h3>🖥️ CPU Usage</h3>
+
+            <b>{{ cpu }}%</b>
+
+        </div>
+
+
+        <div class="metric-card">
+
+            <h3>💾 Memory Usage</h3>
+
+            <b>{{ memory }}%</b>
+
+        </div>
+
+
+        <div class="metric-card">
+
+            <h3>⚡ Response Time</h3>
+
+            <b>{{ response }} ms</b>
+
+        </div>
+
+
+        <div class="metric-card">
+
+            <h3>❌ Error Rate</h3>
+
+            <b>{{ error }}%</b>
+
+        </div>
+
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- -------------------------------- -->
+    <!-- AI ANALYSIS -->
+    <!-- -------------------------------- -->
+
+    <h2>🤖 AI Analysis</h2>
+
+
+    <div class="status-card">
+
+
+        <p>
+
+            <b>Health Status:</b>
+
+            {{ status }}
+
+        </p>
+
+
+        <p>
+
+            <b>Health Analysis:</b>
+
+            {{ health_analysis }}
+
+        </p>
+
+
+        <p>
+
+            <b>AI Detection:</b>
+
+            {{ ai_result }}
+
+        </p>
+
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- -------------------------------- -->
+    <!-- HEALTH CHECK FORM -->
+    <!-- -------------------------------- -->
+
+    <h2>🔍 Check Deployment Health</h2>
+
+
+    <form method="POST" action="/check">
+
+
+        <p>
+
+            <label>
+                CPU Usage (%)
+            </label>
+
+            <br>
+
+            <input
+                type="number"
+                name="cpu"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+            >
+
+        </p>
+
+
+        <p>
+
+            <label>
+                Memory Usage (%)
+            </label>
+
+            <br>
+
+            <input
+                type="number"
+                name="memory"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+            >
+
+        </p>
+
+
+        <p>
+
+            <label>
+                Response Time (ms)
+            </label>
+
+            <br>
+
+            <input
+                type="number"
+                name="response"
+                min="0"
+                step="0.1"
+                required
+            >
+
+        </p>
+
+
+        <p>
+
+            <label>
+                Error Rate (%)
+            </label>
+
+            <br>
+
+            <input
+                type="number"
+                name="error"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+            >
+
+        </p>
+
+
+        <button type="submit">
+
+            Check Health
+
+        </button>
+
+
+    </form>
+
+
+    <hr>
+
+
+    <!-- -------------------------------- -->
+    <!-- HEALTH CHECK HISTORY -->
+    <!-- -------------------------------- -->
+
+    <h2>📊 Health Check History</h2>
+
+
+    <table border="1">
+
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>CPU</th>
+
+            <th>Memory</th>
+
+            <th>Response Time</th>
+
+            <th>Error Rate</th>
+
+            <th>Status</th>
+
+        </tr>
+
+
+        {% for record in history %}
+
+
+        <tr>
+
+            <td>
+                {{ record[0] }}
+            </td>
+
+
+            <td>
+                {{ record[1] }}%
+            </td>
+
+
+            <td>
+                {{ record[2] }}%
+            </td>
+
+
+            <td>
+                {{ record[3] }} ms
+            </td>
+
+
+            <td>
+                {{ record[4] }}%
+            </td>
+
+
+            <td>
+
+                {% if record[5] == "Healthy" %}
+
+                    <span class="healthy">
+                        🟢 Healthy
+                    </span>
+
+
+                {% elif record[5] == "Warning" %}
+
+                    <span class="warning">
+                        🟡 Warning
+                    </span>
+
+
+                {% else %}
+
+                    <span class="critical">
+                        🔴 Critical
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+
+        {% endfor %}
+
+
+    </table>
+
+
+</body>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>AI Cloud Deployment Health Monitor</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 30px;
+        }
+
+
+        h1 {
+            color: #1f2937;
+        }
+
+
+        h2 {
+            color: #374151;
+        }
+
+
+        .status-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+
+        .metrics {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 200px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+
+        .metric-card h3 {
+            margin-top: 0;
+            color: #374151;
+        }
+
+
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+
+        input {
+            padding: 8px;
+            margin: 6px 0;
+            width: 200px;
+        }
+
+
+        button {
+            padding: 12px 25px;
+            margin-top: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background-color: #2563eb;
+            color: white;
+            font-size: 16px;
+        }
+
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+
+        table {
+            background: white;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+
+        th {
+            background-color: #e5e7eb;
+        }
+
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+
+        .healthy {
+            color: green;
+            font-weight: bold;
+        }
+
+
+        .warning {
+            color: orange;
+            font-weight: bold;
+        }
+
+
+        .critical {
+            color: red;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- -------------------------------- -->
+    <!-- PROJECT TITLE -->
+    <!-- -------------------------------- -->
+
+    <h1>☁️ AI Cloud Deployment Health Monitor</h1>
+
+    <p>
+        Monitor deployment performance, detect anomalies,
+        and analyze system health.
+    </p>
+
+    <p>
+        This system monitors CPU usage, memory usage,
+        response time, and error rate.
+    </p>
+
+
+    <hr>
+
+
+    <!-- -------------------------------- -->
+    <!-- SYSTEM STATUS -->
+    <!-- -------------------------------- -->
+
+    <h2>📊 System Status</h2>
+
+    <div class="status-card">
+
+        <p>
+            <b>Current Health Status:</b>
+        </p>
+
+
+        {% if status == "Healthy" %}
+
+            <h3 class="healthy">
+                🟢 Healthy
+            </h3>
+
+
+        {% elif status == "Warning" %}
+
+            <h3 class="warning">
+                🟡 Warning
+            </h3>
+
+
+        {% elif status == "Critical" %}
+
+            <h3 class="critical">
+                🔴 Critical
+            </h3>
+
+
+        {% else %}
+
+            <h3>
+                ⚪ No Data
+            </h3>
+
+        {% endif %}
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- -------------------------------- -->
+    <!-- CLOUD METRICS -->
+    <!-- -------------------------------- -->
+
+    <h2>☁️ Cloud Metrics</h2>
+
+
+    <div class="metrics">
+
+
+        <div class="metric-card">
+
+            <h3>🖥️ CPU Usage</h3>
+
+            <b>{{ cpu }}%</b>
+
+        </div>
+
+
+        <div class="metric-card">
+
+            <h3>💾 Memory Usage</h3>
+
+            <b>{{ memory }}%</b>
+
+        </div>
+
+
+        <div class="metric-card">
+
+            <h3>⚡ Response Time</h3>
+
+            <b>{{ response }} ms</b>
+
+        </div>
+
+
+        <div class="metric-card">
+
+            <h3>❌ Error Rate</h3>
+
+            <b>{{ error }}%</b>
+
+        </div>
+
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- -------------------------------- -->
+    <!-- AI ANALYSIS -->
+    <!-- -------------------------------- -->
+
+    <h2>🤖 AI Analysis</h2>
+
+
+    <div class="status-card">
+
+
+        <p>
+
+            <b>Health Status:</b>
+
+            {{ status }}
+
+        </p>
+
+
+        <p>
+
+            <b>Health Analysis:</b>
+
+            {{ health_analysis }}
+
+        </p>
+
+
+        <p>
+
+            <b>AI Detection:</b>
+
+            {{ ai_result }}
+
+        </p>
+
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- -------------------------------- -->
+    <!-- HEALTH CHECK FORM -->
+    <!-- -------------------------------- -->
+
+    <h2>🔍 Check Deployment Health</h2>
+
+
+    <form method="POST" action="/check">
+
+
+        <p>
+
+            <label>
+                CPU Usage (%)
+            </label>
+
+            <br>
+
+            <input
+                type="number"
+                name="cpu"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+            >
+
+        </p>
+
+
+        <p>
+
+            <label>
+                Memory Usage (%)
+            </label>
+
+            <br>
+
+            <input
+                type="number"
+                name="memory"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+            >
+
+        </p>
+
+
+        <p>
+
+            <label>
+                Response Time (ms)
+            </label>
+
+            <br>
+
+            <input
+                type="number"
+                name="response"
+                min="0"
+                step="0.1"
+                required
+            >
+
+        </p>
+
+
+        <p>
+
+            <label>
+                Error Rate (%)
+            </label>
+
+            <br>
+
+            <input
+                type="number"
+                name="error"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+            >
+
+        </p>
+
+
+        <button type="submit">
+
+            Check Health
+
+        </button>
+
+
+    </form>
+
+
+    <hr>
+
+
+    <!-- -------------------------------- -->
+    <!-- HEALTH CHECK HISTORY -->
+    <!-- -------------------------------- -->
+
+    <h2>📊 Health Check History</h2>
+
+
+    <table border="1">
+
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>CPU</th>
+
+            <th>Memory</th>
+
+            <th>Response Time</th>
+
+            <th>Error Rate</th>
+
+            <th>Status</th>
+
+        </tr>
+
+
+        {% for record in history %}
+
+
+        <tr>
+
+            <td>
+                {{ record[0] }}
+            </td>
+
+
+            <td>
+                {{ record[1] }}%
+            </td>
+
+
+            <td>
+                {{ record[2] }}%
+            </td>
+
+
+            <td>
+                {{ record[3] }} ms
+            </td>
+
+
+            <td>
+                {{ record[4] }}%
+            </td>
+
+
+            <td>
+
+                {% if record[5] == "Healthy" %}
+
+                    <span class="healthy">
+                        🟢 Healthy
+                    </span>
+
+
+                {% elif record[5] == "Warning" %}
+
+                    <span class="warning">
+                        🟡 Warning
+                    </span>
+
+
+                {% else %}
+
+                    <span class="critical">
+                        🔴 Critical
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+
+        {% endfor %}
+
+
+    </table>
+
+
+</body>
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>AI Cloud Deployment Health Monitor</title>
+
+    <style>
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background-color: #f4f6f8;
+
+            margin: 30px;
+
+        }
+
+        h1 {
+
+            color: #1f2937;
+
+        }
+
+        h2 {
+
+            color: #374151;
+
+        }
+
+        .status-card {
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            width: 400px;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+            margin-bottom: 20px;
+
+        }
+
+        .metrics {
+
+            display: flex;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .metric-card {
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            width: 200px;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+        }
+
+        .metric-card h3 {
+
+            margin-top: 0;
+
+            color: #374151;
+
+        }
+
+        form {
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            width: 400px;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+        }
+
+        input {
+
+            padding: 8px;
+
+            margin: 6px 0;
+
+            width: 200px;
+
+        }
+
+        button {
+
+            padding: 12px 25px;
+
+            margin-top: 10px;
+
+            cursor: pointer;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background-color: #2563eb;
+
+            color: white;
+
+            font-size: 16px;
+
+        }
+
+        button:hover {
+
+            background-color: #1d4ed8;
+
+        }
+
+        table {
+
+            background: white;
+
+            border-collapse: collapse;
+
+            width: 100%;
+
+        }
+
+        th {
+
+            background-color: #e5e7eb;
+
+        }
+
+        th, td {
+
+            padding: 10px;
+
+            text-align: center;
+
+        }
+
+        .healthy {
+
+            color: green;
+
+            font-weight: bold;
+
+        }
+
+        .warning {
+
+            color: orange;
+
+            font-weight: bold;
+
+        }
+
+        .critical {
+
+            color: red;
+
+            font-weight: bold;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- -------------------------------- -->
+
+    <!-- PROJECT TITLE -->
+
+    <!-- -------------------------------- -->
+
+    <h1>☁️ AI Cloud Deployment Health Monitor</h1>
+
+    <p>
+
+        Monitor deployment performance, detect anomalies,
+
+        and analyze system health.
+
+    </p>
+
+    <p>
+
+        This system monitors CPU usage, memory usage,
+
+        response time, and error rate.
+
+    </p>
+
+    <hr>
+
+    <!-- -------------------------------- -->
+
+    <!-- SYSTEM STATUS -->
+
+    <!-- -------------------------------- -->
+
+    <h2>📊 System Status</h2>
+
+    <div class="status-card">
+
+        <p>
+
+            <b>Current Health Status:</b>
+
+        </p>
+
+        {% if status == "Healthy" %}
+
+            <h3 class="healthy">
+
+                🟢 Healthy
+
+            </h3>
+
+        {% elif status == "Warning" %}
+
+            <h3 class="warning">
+
+                🟡 Warning
+
+            </h3>
+
+        {% elif status == "Critical" %}
+
+            <h3 class="critical">
+
+                🔴 Critical
+
+            </h3>
+
+        {% else %}
+
+            <h3>
+
+                ⚪ No Data
+
+            </h3>
+
+        {% endif %}
+
+    </div>
+
+    <hr>
+
+    <!-- -------------------------------- -->
+
+    <!-- CLOUD METRICS -->
+
+    <!-- -------------------------------- -->
+
+    <h2>☁️ Cloud Metrics</h2>
+
+    <div class="metrics">
+
+        <div class="metric-card">
+
+            <h3>🖥️ CPU Usage</h3>
+
+            <b>{{ cpu }}%</b>
+
+        </div>
+
+        <div class="metric-card">
+
+            <h3>💾 Memory Usage</h3>
+
+            <b>{{ memory }}%</b>
+
+        </div>
+
+        <div class="metric-card">
+
+            <h3>⚡ Response Time</h3>
+
+            <b>{{ response }} ms</b>
+
+        </div>
+
+        <div class="metric-card">
+
+            <h3>❌ Error Rate</h3>
+
+            <b>{{ error }}%</b>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- -------------------------------- -->
+
+    <!-- AI ANALYSIS -->
+
+    <!-- -------------------------------- -->
+
+    <h2>🤖 AI Analysis</h2>
+
+    <div class="status-card">
+
+        <p>
+
+            <b>Health Status:</b>
+
+            {{ status }}
+
+        </p>
+
+        <p>
+
+            <b>Health Analysis:</b>
+
+            {{ health_analysis }}
+
+        </p>
+
+        <p>
+
+            <b>AI Detection:</b>
+
+            {{ ai_result }}
+
+        </p>
+
+    </div>
+
+    <hr>
+
+    <!-- -------------------------------- -->
+
+    <!-- HEALTH CHECK FORM -->
+
+    <!-- -------------------------------- -->
+
+    <h2>🔍 Check Deployment Health</h2>
+
+    <form method="POST" action="/check">
+
+        <p>
+
+            <label>
+
+                CPU Usage (%)
+
+            </label>
+
+            <br>
+
+            <input
+
+                type="number"
+
+                name="cpu"
+
+                min="0"
+
+                max="100"
+
+                step="0.1"
+
+                required
+
+            >
+
+        </p>
+
+        <p>
+
+            <label>
+
+                Memory Usage (%)
+
+            </label>
+
+            <br>
+
+            <input
+
+                type="number"
+
+                name="memory"
+
+                min="0"
+
+                max="100"
+
+                step="0.1"
+
+                required
+
+            >
+
+        </p>
+
+        <p>
+
+            <label>
+
+                Response Time (ms)
+
+            </label>
+
+            <br>
+
+            <input
+
+                type="number"
+
+                name="response"
+
+                min="0"
+
+                step="0.1"
+
+                required
+
+            >
+
+        </p>
+
+        <p>
+
+            <label>
+
+                Error Rate (%)
+
+            </label>
+
+            <br>
+
+            <input
+
+                type="number"
+
+                name="error"
+
+                min="0"
+
+                max="100"
+
+                step="0.1"
+
+                required
+
+            >
+
+        </p>
+
+        <button type="submit">
+
+            Check Health
+
+        </button>
+
+    </form>
+
+    <hr>
+
+    <!-- -------------------------------- -->
+
+    <!-- HEALTH CHECK HISTORY -->
+
+    <!-- -------------------------------- -->
+
+    <h2>📊 Health Check History</h2>
+
+    <table border="1">
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>CPU</th>
+
+            <th>Memory</th>
+
+            <th>Response Time</th>
+
+            <th>Error Rate</th>
+
+            <th>Status</th>
+
+        </tr>
+
+        {% for record in history %}
+
+        <tr>
+
+            <td>
+
+                {{ record[0] }}
+
+            </td>
+
+            <td>
+
+                {{ record[1] }}%
+
+            </td>
+
+            <td>
+
+                {{ record[2] }}%
+
+            </td>
+
+            <td>
+
+                {{ record[3] }} ms
+
+            </td>
+
+            <td>
+
+                {{ record[4] }}%
+
+            </td>
+
+            <td>
+
+                {% if record[5] == "Healthy" %}
+
+                    <span class="healthy">
+
+                        🟢 Healthy
+
+                    </span>
+
+                {% elif record[5] == "Warning" %}
+
+                    <span class="warning">
+
+                        🟡 Warning
+
+                    </span>
+
+                {% else %}
+
+                    <span class="critical">
+
+                        🔴 Critical
+
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</body>
+
+</html>
